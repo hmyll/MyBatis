@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+   <!--注册属性文件-->
+    <properties resource="jdbc.properties"/>
+    
+    <typeAliases>
+        <!--为单个实体类型指定集合
+        <typeAlias type="com.Student" alias="Student"/>-->
+        <!--为某一包下的所有实体类指定别名-->
+        <package name="com.abc.beans"/>
+    </typeAliases>
+    <environments default="MySqlEM">
+        <environment id="MySqlEM">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+        <environment id="OracleEM">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!--<mapper resource="com/abc/dao/mapper.xml"/>-->
+        <mapper class="com.abc.dao.IStudentDao"/>
+        <!--注册com.abc.dao包下的所有映射文件-->
+        <!--<package name="com.abc.dao"/>-->
+    </mappers>
+</configuration>
