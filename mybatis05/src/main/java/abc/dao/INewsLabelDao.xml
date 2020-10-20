@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="abc.dao.INewsLabelDao">
+
+    <!--查询某栏目及其所有的子栏目-->
+    <!--多表连接查询-->
+    <!--<resultMap id="resuletMapNewsLabel" type="NewsLabel">-->
+        <!--<id column="ptid" property="id"/>-->
+        <!--<result column="ptname" property="name"/>-->
+        <!--<collection property="children" ofType="NewsLabel">-->
+            <!--<id column="ctid" property="id"/>-->
+            <!--<result column="ctname" property="name"/>-->
+        <!--</collection>-->
+    <!--</resultMap>-->
+    <!--<select id="selectNewsLabelById" resultMap="resuletMapNewsLabel">-->
+        <!--select pt.id ptid,pt.name ptname, ct.id ctid, ct.name ctname-->
+        <!--from newslabel pt, newslabel ct-->
+        <!--where pt.id=ct.pid and pt.id=1;-->
+    <!--</select>-->
+
+    <!--查询某栏目及其所有的子栏目-->
+    <!--多表单独查询-->
+    <!--<select id="selectChildrenByParent" resultMap="resuletMapNewsLabel">-->
+        <!--select id,name from newslabel where pid = #{xxx};-->
+    <!--</select>-->
+    <!--<resultMap id="resuletMapNewsLabel" type="NewsLabel">-->
+        <!--<id column="id" property="id"/>-->
+        <!--<result column="name" property="name"/>-->
+        <!--<collection property="children"-->
+                     <!--ofType="NewsLabel"-->
+                     <!--select="selectChildrenByParent"-->
+                     <!--column="id"-->
+        <!--/>-->
+    <!--</resultMap>-->
+    <!--<select id="selectNewsLabelById" resultMap="resuletMapNewsLabel">-->
+        <!--select id,name from newslabel where id = #{xxx};-->
+    <!--</select>-->
+
+    <!--查询某栏目所有的子栏目-->
+    <!--多表单独查询-->
+    <!--<select id="selectChildrenByParent" resultMap="resuletMapNewsLabel">-->
+        <!--select id,name from newslabel where pid = #{xxx};-->
+    <!--</select>-->
+    <!--<resultMap id="resuletMapNewsLabel" type="NewsLabel">-->
+        <!--<id column="id" property="id"/>-->
+        <!--<result column="name" property="name"/>-->
+        <!--<collection property="children"-->
+                    <!--ofType="NewsLabel"-->
+                    <!--select="selectChildrenByParent"-->
+                    <!--column="id"-->
+        <!--/>-->
+    <!--</resultMap>-->
+
+
+    <!--查询某栏目及其所有的父栏目-->
+    <!--多表单独查询-->
+    <resultMap id="resultMapNewsLabel" type="NewsLabel2">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <association property="parent"
+                      javaType="NewsLabel"
+                      select="selectNewsLabelById2"
+                      column="pid"
+        />
+    </resultMap>
+    <select id="selectNewsLabelById2" resultMap="resultMapNewsLabel">
+        select id,name,pid from newslabel where id=#{xxx}
+    </select>
+</mapper>
