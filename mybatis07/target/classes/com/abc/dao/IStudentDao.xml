@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.abc.dao.IStudentDao">
+
+    <!--开启二级缓存-->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    <!--<cache type="org.mybatis.caches.ehcache.EhcacheCache">-->
+        <!--<property name="maxElementsInMemory" value="9000"/>-->
+        <!--<property name="timeToIdleSeconds" value="200"/>-->
+    <!--</cache>-->
+    <!--size键值对 eviction回收置换策略 flushInterval刷新缓存间隔
+    <cache size="512" eviction="LRU" flushInterval="100000"/>-->
+
+    <!--增删改操作不影响二级缓存-->
+    <insert id="insertStudent" flushCache="false">
+        insert into student (name,age,score) values(#{name},#{age},#{score})
+    </insert>
+
+    <insert id="insertStudentCatchId">
+        insert into student(name ,age, score) values (#{name}, #{age}, #{score})
+        <selectKey resultType="int" keyProperty="id">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <update id="upDateStudent">
+        update student set name=#{name },age=#{age},score=#{score} where  id=#{id}
+    </update>
+
+    <!--当动态类型参数为基本类型或者string时，#{}的作用是占位符，其中可以填写任意内容
+        当动态类型参数为自定义类的对象时，#{}中填写的对象的属性名
+    -->
+    <delete id="delectById">
+          delete from student where id=#{id}
+    </delete>
+
+    <!--resultType的属性值是每条记录封装成的对象类型-->
+    <select id="selectAllStudent" resultType="Student">
+        select * from student;
+    </select>
+
+    <!--局部关闭二级缓存，当前查询不能使用二级缓存-->
+    <select id="selectStudentById" resultType="Student" useCache="true">
+        select * from student where id = #{id}
+    </select>
+
+    <select id="selectStudentById2" resultType="Student">
+        select * from student where id = #{id}
+    </select>
+
+</mapper>
