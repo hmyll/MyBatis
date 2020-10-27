@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.abc.dao.IStudentDao">
+
+    <select id="selectStudentById2" resultType="Student">
+        select tid id,tname name,tage age,score from t_student where tid = #{xxx}
+    </select>
+
+
+    <resultMap id="resultMapStudent" type="Student">
+        <id column="tid" property="id"/>
+        <result column="tname" property="name"/>
+        <result column="tage" property="age"/>
+    </resultMap>
+    <select id="selectStudentById3" resultMap="resultMapStudent">
+        select tid,tname,tage,score from t_student where tid = #{xxx}
+    </select>
+
+</mapper>
