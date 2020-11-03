@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+   <!--注册属性文件-->
+    <properties resource="jdbc.properties"/>
+    <!--配置延迟加载-->
+    <settings>
+        <!--延迟加载的总开关-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--侵入式延迟加载，需要延迟加载的总开关开启的状态下，本开关才起作用-->
+        <!--value的值为true时才是侵入式加载，为false或者下面的语句不写为深度延迟加载-->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+    <typeAliases>
+        <!--为单个实体类型指定集合
+        <typeAlias type="com.Student" alias="Student"/>-->
+        <!--为某一包下的所有实体类指定别名-->
+        <package name="abc.beans"/>
+    </typeAliases>
+
+    <environments default="MySqlEM">
+        <environment id="MySqlEM">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+        <environment id="OracleEM">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!--<mapper resource="com/abc/dao/mapper.xml"/>-->
+        <!--<mapper class="com.abc.dao.IStudentDao"/>-->
+        <!--注册com.abc.dao包下的所有映射文件-->
+        <package name="abc.dao"/>
+    </mappers>
+</configuration>
