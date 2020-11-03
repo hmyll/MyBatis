@@ -31,7 +31,7 @@ public class MyTest {
         }
     }
 
-    //注解开发和注解动态SQL
+    //注解开发及其注解动态SQL
     @Test
     public void test01(){
         Student student = new Student("张飞", 25, 90);
